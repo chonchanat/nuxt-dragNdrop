@@ -14,12 +14,11 @@
 
       <p class="text-xs font-normal text-[#585861]">งานทั้งหมด {{ job.sub_job.length }} งาน</p>
 
-      <draggable class="dragArea list-group" :list="showSubJob" :group="job.name" :sort="false">
+      <draggable class="dragArea list-group" :list="job.sub_job" :group="job.name" @change="onChange">
         <SubJobCard 
           v-for="(subJob, index) in showSubJob"
           :key="index"
           :subJob="subJob"
-          :color="job.color"
         />
       </draggable>
     </div>
@@ -44,18 +43,10 @@ const showSubJob = computed(() => {
   return isShowAll.value ? props.job.sub_job : props.job.sub_job.slice(0, 3);
 })
 
-// const showSubJobList = ref(props.job.sub_job.slice(0, 3));
-
-// watchEffect(() => {
-//   showSubJobList.value = isShowAll.value
-//     ? [...props.job.sub_job]
-//     : props.job.sub_job.slice(0, 3);
-// });
-
-// const onSubJobReorder = () => {
-//   // Optional: บันทึกลำดับใหม่ลง backend หรือ props.job.sub_job ถ้าจำเป็น
-//   console.log('new order:', showSubJobList.value);
-// };
+const onChange = (event) => {
+  console.log(props.job)
+  console.log(event)
+}
 
 </script>
 

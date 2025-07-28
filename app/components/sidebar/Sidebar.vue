@@ -6,7 +6,7 @@
 
     <div class="mt-2 overflow-y-auto flex-grow">
        <JobCard 
-        v-for="(job, index) in jobs" 
+        v-for="(job, index) in jobsUpdated" 
         :key="index" 
         :job="job" 
       />
@@ -20,6 +20,8 @@ import { useJob } from '#imports';
 import JobCard from './JobCard.vue';
 
 const { jobs } = useJob();
+
+const jobsUpdated = ref(jobs)
 
 </script>
 

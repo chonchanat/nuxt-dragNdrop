@@ -1,3 +1,10 @@
+export const driver = Array.from({ length: 20 }, (_, i) => ({
+  id: i + 1,
+  name: 'ชื่อ พขร./รหัสรถ',
+}))
+
+export const round = Array.from({ length: 5})
+
 export const jobs = [
   {
     id: 1,
@@ -6,25 +13,29 @@ export const jobs = [
     sub_job: [
       {
         sub_job_id: 1,
+        ref_id: 1,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 2,
-        sub_job_code: 'J21923123',
+        ref_id: 1,
+        sub_job_code: 'J21923124',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 3,
-        sub_job_code: 'J21923123',
+        ref_id: 1,
+        sub_job_code: 'J21923125',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 4,
-        sub_job_code: 'J21923123',
+        ref_id: 1,
+        sub_job_code: 'J21923126',
         title: 'sub job',
         description: 'description sub job'
       },
@@ -37,18 +48,21 @@ export const jobs = [
     sub_job: [
       {
         sub_job_id: 1,
+        ref_id: 2,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 2,
+        ref_id: 2,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 3,
+        ref_id: 2,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
@@ -62,22 +76,59 @@ export const jobs = [
     sub_job: [
       {
         sub_job_id: 1,
+        ref_id: 3,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 2,
+        ref_id: 3,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
       {
         sub_job_id: 3,
+        ref_id: 3,
         sub_job_code: 'J21923123',
         title: 'sub job',
         description: 'description sub job'
       },
     ]
+  },
+]
+
+export const contentData = [
+  {
+    driver_id: 1,
+    driver_name: 'ชื่อ พขร./รหัสรถ',
+    round: [
+      {
+        round_id: 1,
+        note: '',
+        sub_job_id: null,
+      },
+      {
+        round_id: 2,
+        note: 'รถกำลังซ่อมอยู่ในอู่รถ',
+        sub_job_id: null,
+      },
+      {
+        round_id: 3,
+        note: '',
+        sub_job_id: null,
+      },
+      {
+        round_id: 4,
+        note: '',
+        sub_job_id: null,
+      },
+      {
+        round_id: 5,
+        note: '',
+        sub_job_id: null,
+      },
+    ],
   },
 ]

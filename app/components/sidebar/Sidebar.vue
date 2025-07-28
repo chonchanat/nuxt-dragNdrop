@@ -1,10 +1,10 @@
 <template>
-  <div class="h-screen">
-    <div class="w-[360px] h-[43px] flex justify-center items-center">
+  <div class="h-screen flex flex-col w-[360px]">
+    <div class="h-[43px] flex justify-center items-center shrink-0">
       <p class="text-xl text-[#c9cfd7]">ประเภทงาน</p>
     </div>
 
-    <div class="mt-2">
+    <div class="mt-2 overflow-y-auto flex-grow">
        <JobCard 
         v-for="(job, index) in jobs" 
         :key="index" 

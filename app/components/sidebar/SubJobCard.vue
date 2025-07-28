@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="rounded-[3px] mt-2 px-[12px] py-[8px]" :style="{
+    <div class="rounded-[3px] mt-2 px-[12px] py-[8px] w-[344px]" :style="{
       backgroundColor: hexToRGBA(color, 0.1),
       borderLeft: `6px solid ${color}`,
     }">

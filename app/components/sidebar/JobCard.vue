@@ -14,7 +14,7 @@
 
       <p class="text-xs font-normal text-[#585861]">งานทั้งหมด {{ job.sub_job.length }} งาน</p>
 
-      <draggable class="dragArea list-group" :list="job.sub_job" :group="job.name" @change="onChange">
+      <draggable class="dragArea list-group" :list="job.sub_job" :group="job.name" :sort="false" @change="onChange">
         <SubJobCard 
           v-for="(subJob, index) in showSubJob"
           :key="index"

@@ -18,7 +18,7 @@ const props = defineProps({
 
 const updatedColor = ref('')
 
-watch(() => props.color, (newValue) => {
+watch(() => props.subJob, (newValue) => {
   updatedColor.value = props.subJob.ref_id === 1 ? '#8338ec' :
       props.subJob.ref_id === 2 ? '#1ecb44' :
         '#ffbe0b'

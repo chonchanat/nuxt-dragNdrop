@@ -8,7 +8,7 @@
     <div>
       <UTextarea 
         v-model="data[i].round[j].note" 
-        class="w-full bg-amber-300" 
+        class="w-full" 
         ref="inputRefs"
       />
     </div>

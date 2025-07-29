@@ -13,9 +13,10 @@
 
       <draggable class="dragArea list-group flex" :list="slot.round" 
         :group="{name: 'content', put: true}"
+        @change="onChange($event, _i)"
       >
         <div
-          v-for="(card, _j) in slot.round.slice(0, 5)"
+          v-for="(card, _j) in slot.round"
           :key="_j"
           class="bg-white border-r-[0.5px] border-[#f1f2f4] w-[360px] p-2"
         >
@@ -47,6 +48,24 @@ import Note from './Note.vue';
 
 const data = ref(contentData)
 
+const tempData = ref({})
+
+const onChange = (event, mainIndex) => {
+  const { added, removed, moved } = event;
+  const empty = { note: '', sub_job_id: null }
+
+  if (added) {
+    const newIndex = added.newIndex;
+    tempData.value = data.value[mainIndex].round[newIndex + 1]
+    data.value[mainIndex].round.splice(newIndex + 1, 1)
+  } else if (removed) {
+    const oldIndex = removed.oldIndex;
+    data.value[mainIndex].round.splice(oldIndex, 0, empty)                // replace with empty object
+    // data.value[mainIndex].round.splice(oldIndex, 0, tempData.value)    // swapping
+  }
+}
+
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

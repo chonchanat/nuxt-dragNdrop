@@ -40,12 +40,13 @@ const toggleShowAll = () => {
 }
 
 const showSubJob = computed(() => {
-  return isShowAll.value ? props.job.sub_job : props.job.sub_job.slice(0, 3);
+  let sortedList = props.job.sub_job.sort((a, b) => a.sub_job_id - b.sub_job_id)
+  return isShowAll.value ? sortedList : sortedList.slice(0, 3);
 })
 
 const onChange = (event) => {
-  console.log(props.job)
-  console.log(event)
+  // console.log(props.job)
+  // console.log(event)
 }
 
 </script>

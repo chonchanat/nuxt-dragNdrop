@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div class="rounded-[3px] mt-2 px-[12px] py-[8px] w-[344px]" :style="{
+    <div class="rounded-[3px] mt-2 px-[12px] py-[8px] w-full" :style="{
       backgroundColor: hexToRGBA(updatedColor, 0.1),
       borderLeft: `6px solid ${updatedColor}`,
     }">
-      <p class="text-sm font-bold" :style="{ color: updatedColor }">{{ subJob.sub_job_code }}</p>
+      <div class="flex justify-between">
+        <p class="text-sm font-bold" :style="{ color: updatedColor }">{{ subJob.sub_job_code }}</p>
+        <Icon v-if="used" name="hugeicons:column-insert" :style="{ color: updatedColor }" />
+      </div>
       <p class="text-[10px] font-semibold my-2">{{ subJob.title }}</p>
       <p class="text-[10px] text-[#8a94a6]">{{ subJob.description }}</p>
     </div>
@@ -14,6 +17,11 @@
 <script setup>
 const props = defineProps({
   subJob: null,
+  used: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 
 const updatedColor = ref('')

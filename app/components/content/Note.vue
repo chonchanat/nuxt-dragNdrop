@@ -7,9 +7,11 @@
     </div>
     <div>
       <UTextarea 
-        v-model="data[i].round[j].note" 
+        v-model="computeNote" 
         class="w-full" 
         ref="inputRefs"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
       />
     </div>
   </div>
@@ -24,13 +26,23 @@ const props = defineProps({
 })
 
 const inputRefs = ref(null)
+const isFocused = ref(false)
+
+const computeNote = computed({
+  get: () => {
+    const rawNote = props.data[props.i].round[props.j].note || ''
+    return isFocused.value ? rawNote : rawNote ? `Note : ${rawNote}` : ''
+  },
+  set: (val) => {
+    props.data[props.i].round[props.j].note = val
+  }
+})
 
 const focusInput = () => {
   inputRefs.value?.$el?.querySelector('textarea')?.focus()
 }
 
 const removeNote = (i, j) => {
-  console.log('remove text', i, j)
   props.data[props.i].round[props.j].note = '';
 }
 

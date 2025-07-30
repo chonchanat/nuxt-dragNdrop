@@ -11,57 +11,120 @@
         <p class="font-semibold text-[#1f2937]">{{ slot.driver_name }}</p>
       </div>
 
-      <draggable class="dragArea list-group flex" :list="slot.round" 
-        :group="{name: 'content', put: true}"
-        @change="onChange($event, _i)"
-      >
         <div
           v-for="(card, _j) in slot.round"
           :key="_j"
           class="bg-white border-r-[0.5px] border-[#f1f2f4] w-[360px] p-2"
+          @dragover.prevent
+          @drop="onDrop(_i, _j)"
+          @dragenter="onDragEnter(_i, _j)"
+          @dragleave="onDragLeave"
         >
-          <Note 
-            v-if="!card.sub_job_id"
-            :card="card"
-            :data="data"
-            :i="_i"
-            :j="_j"
-          />
-
-          <SubJobCard 
-            v-else
-            :subJob="card"
-          />
+          <div v-if="previewDropI === _i && previewDropJ === _j && draggedJob">
+            <SubJobCard :subJob="draggedJob" class="opacity-25" />
+          </div>
+          <div v-else>
+            <Note 
+              v-if="!card.sub_job_id"
+              :card="card"
+              :data="data"
+              :i="_i"
+              :j="_j"
+            />
+            
+            <SubJobCard 
+              v-else
+              :subJob="card"
+              :used="true"
+              draggable="true"
+              @dragstart="onDragStart(card, _i, _j)"
+              @dragend="onDragEnd"
+              :class="_i === dragStartI && _j === dragStartJ ? 'opacity-25' : ''"
+            />
+          </div>
 
         </div>
-      </draggable>
-
     </div>
-  </div>
+
+</div>
 </template>
 
 <script setup>
-import { driver, round, contentData } from '../../composables/data'
-import { VueDraggableNext as Draggable } from 'vue-draggable-next'
 import SubJobCard from '../sidebar/SubJobCard.vue';
 import Note from './Note.vue';
+import { useDrag } from '#imports';
+import { useJob } from '#imports';
 
-const data = ref(contentData)
+const { draggedJob } = useDrag();
+const { data, jobsUpdated } = useJob();
 
-const tempData = ref({})
+const previewDropI = ref(null);
+const previewDropJ = ref(null);
 
-const onChange = (event, mainIndex) => {
-  const { added, removed, moved } = event;
-  const empty = { note: '', sub_job_id: null }
+const dragStartI = ref(null);
+const dragStartJ = ref(null);
 
-  if (added) {
-    const newIndex = added.newIndex;
-    tempData.value = data.value[mainIndex].round[newIndex + 1]
-    data.value[mainIndex].round.splice(newIndex + 1, 1)
-  } else if (removed) {
-    const oldIndex = removed.oldIndex;
-    data.value[mainIndex].round.splice(oldIndex, 0, empty)                // replace with empty object
-    // data.value[mainIndex].round.splice(oldIndex, 0, tempData.value)    // swapping
+const onDragEnter = (i, j) => {
+  previewDropI.value = i;
+  previewDropJ.value = j;
+}
+
+const onDragLeave = () => {
+  previewDropI.value = null;
+  previewDropJ.value = null;
+}
+
+const onDragStart = (job, i, j) => {
+  draggedJob.value = job
+
+  dragStartI.value = i
+  dragStartJ.value = j
+}
+
+const onDragEnd = () => {
+  draggedJob.value = null
+
+  previewDropI.value = null
+  previewDropJ.value = null
+
+  dragStartI.value = null
+  dragStartJ.value = null
+}
+
+const onDrop = (i, j) => {
+  if (draggedJob.value) {
+    // restore job if already have in content area (replace from sidebar)
+    if (data.value[i].round[j].sub_job_id) {
+      const oldJob = data.value[i].round[j]
+      const jobIndex = jobsUpdated.value.findIndex((e) => e.id === oldJob.ref_id)
+      jobsUpdated.value[jobIndex].sub_job.push(oldJob)
+    }
+
+    data.value[i].round[j] = draggedJob.value;
+
+    // restore old index with empty object
+    const samePosition = i === dragStartI.value && j === dragStartJ.value;
+    if (dragStartI.value !== null && dragStartJ.value !== null && !samePosition) {
+      data.value[dragStartI.value].round[dragStartJ.value] = { note: '', sub_job_id: null }
+    }
+
+    // update jobsUpdated composable
+    const job_id = draggedJob.value.ref_id
+    const jobIndex = jobsUpdated.value.findIndex((e) => e.id === job_id)
+    const sub_job_id = draggedJob.value.sub_job_id
+    const subJobIndex = jobsUpdated.value[jobIndex].sub_job.findIndex((e) => e.sub_job_id === sub_job_id)
+    if (subJobIndex >= 0) {
+      jobsUpdated.value[jobIndex].sub_job.splice(subJobIndex, 1)
+    }
+
+    // reset 
+    draggedJob.value = null
+
+    previewDropI.value = null
+    previewDropJ.value = null
+
+    dragStartI.value = null
+    dragStartJ.value = null
   }
 }
 

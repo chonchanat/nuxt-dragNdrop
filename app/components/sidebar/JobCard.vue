@@ -14,24 +14,28 @@
 
       <p class="text-xs font-normal text-[#585861]">งานทั้งหมด {{ job.sub_job.length }} งาน</p>
 
-      <draggable class="dragArea list-group" :list="job.sub_job" :group="job.name" :sort="false" @change="onChange">
         <SubJobCard 
           v-for="(subJob, index) in showSubJob"
           :key="index"
           :subJob="subJob"
+          draggable="true"
+          @dragstart="onDragStart(subJob, index)"
+          @dragend="onDragEnd"
+          :class="index === dragStartI ? 'opacity-25' : ''"
         />
-      </draggable>
     </div>
   </div>
 </template>
 
 <script setup>
 import SubJobCard from './SubJobCard.vue';
-import { VueDraggableNext as Draggable } from 'vue-draggable-next'
+import { useDrag } from '#imports';
 
 const props = defineProps({
   job: null,
 })
+
+const { draggedJob } = useDrag();
 
 const isShowAll = ref(false);
 
@@ -44,9 +48,15 @@ const showSubJob = computed(() => {
   return isShowAll.value ? sortedList : sortedList.slice(0, 3);
 })
 
-const onChange = (event) => {
-  // console.log(props.job)
-  // console.log(event)
+const dragStartI = ref(null);
+
+const onDragStart = (subJob, i) => {
+  draggedJob.value = subJob;
+  dragStartI.value = i
+}
+
+const onDragEnd = () => {
+  dragStartI.value = null;
 }
 
 </script>

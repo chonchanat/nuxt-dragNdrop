@@ -39,6 +39,13 @@ export const jobs = [
         title: '[2] EXFU5531083 2408603 RN 482',
         description: 'เปิดตู้หนัก 09.00 Down-Rigid/Drop RN482 เอกสาร'
       },
+      {
+        sub_job_id: 5,
+        ref_id: 1,
+        sub_job_code: 'J21923127',
+        title: '[2] EXFU5531083 2408603 RN 482',
+        description: 'เปิดตู้หนัก 09.00 Down-Rigid/Drop RN482 เอกสาร'
+      },
     ]
   },
   {
@@ -105,24 +112,8 @@ export const contentData = [
     driver_name: 'ชื่อ พขร./รหัสรถ',
     round: [
       {
-        note: '',
-        sub_job_id: null,
-      },
-      {
         note: 'รถกำลังซ่อมอยู่ในอู่รถ',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
+        order: 2,
       },
     ],
   },
@@ -132,35 +123,39 @@ export const contentData = [
     round: [
       {
         note: 'เตรียมตัวทำงาน',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
-      },
-      {
-        note: '',
-        sub_job_id: null,
+        order: 1,
       },
     ],
   },
   {
     driver_id: 3,
     driver_name: 'ชื่อ พขร./รหัสรถ',
-    round: [],
+    round: [
+      {
+        sub_job_id: 12,
+        ref_id: 2,
+        sub_job_code: 'K21923437',
+        title: '[2] EXFU5531083 2408603 RN 482',
+        description: 'เปิดตู้หนัก 09.00 Down-Rigid/Drop RN482 เอกสาร',
+        note: '',
+        order: 3,
+      },
+    ],
   },
   {
     driver_id: 4,
     driver_name: 'ชื่อ พขร./รหัสรถ',
-    round: [],
+    round: [
+      {
+        sub_job_id: 11,
+        ref_id: 3,
+        sub_job_code: 'M21923138',
+        title: '[2] EXFU5531083 2408603 RN 482',
+        description: 'เปิดตู้หนัก 09.00 Down-Rigid/Drop RN482 เอกสาร',
+        note: 'เดินทางออกต่างจังหวัด',
+        order: 1,
+      },
+    ],
   },
   {
     driver_id: 5,

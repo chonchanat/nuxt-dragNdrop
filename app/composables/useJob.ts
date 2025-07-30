@@ -5,11 +5,14 @@ const jobsUpdated = ref(jobs);
 const data = ref(contentData);
 
 for (let i = 0; i < data.value.length; i++) {
-  if (data.value[i]?.round.length === 0) {
-    for (let j = 0; j < 5; j++) {
-      data.value[i]?.round.push({ note: '', sub_job_id: null})
-    }
-  }
+  let fullOrder = [1, 2, 3, 4, 5]
+  let existOrder = data.value[i]?.round.map(e => e.order)
+  let missingOrder = fullOrder.filter(e => !existOrder?.includes(e))
+
+  let combined = [...data.value[i]!.round, ...missingOrder.map(e => ({ order: e, note: ''}))]
+  combined = combined.sort((a, b) => a.order - b.order)
+
+  data.value[i]!.round = combined
 }
 
 export function useJob() {

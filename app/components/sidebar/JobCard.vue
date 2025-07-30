@@ -9,11 +9,12 @@
           @click="toggleShowAll"
         >
           {{ isShowAll ? 'Show Less' : 'Show All'}}
-      </p>
+        </p>
       </div>
 
-      <p class="text-xs font-normal text-[#585861]">งานทั้งหมด {{ job.sub_job.length }} งาน</p>
+      <p class="text-xs font-normal text-[#585861] mb-2">งานทั้งหมด {{ job.sub_job.length }} งาน</p>
 
+      <div class="flex flex-col gap-2">
         <SubJobCard 
           v-for="(subJob, index) in showSubJob"
           :key="index"
@@ -23,6 +24,7 @@
           @dragend="onDragEnd"
           :class="index === dragStartI ? 'opacity-25' : ''"
         />
+      </div>
     </div>
   </div>
 </template>

@@ -100,12 +100,15 @@ const onDrop = (i, j) => {
       jobsUpdated.value[jobIndex].sub_job.push(oldJob)
     }
 
-    data.value[i].round[j] = draggedJob.value;
+    // update content area
+    const new_note = data.value[i].round[j].note || '';
+    data.value[i].round[j] = {...draggedJob.value, note: new_note};
 
-    // restore old index with empty object
+    // restore old index with old object { note: 'note', sub_job_id: null}
     const samePosition = i === dragStartI.value && j === dragStartJ.value;
     if (dragStartI.value !== null && dragStartJ.value !== null && !samePosition) {
-      data.value[dragStartI.value].round[dragStartJ.value] = { note: '', sub_job_id: null }
+      const old_note = draggedJob.value?.note || '';
+      data.value[dragStartI.value].round[dragStartJ.value] = { note: old_note, sub_job_id: null }
     }
 
     // update jobsUpdated composable

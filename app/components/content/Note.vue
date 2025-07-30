@@ -1,9 +1,9 @@
 <template>
-  <div v-if="!card.sub_job_id">
+  <div v-if="!card.sub_job_id" class="pl-[12px] pr-[8px] py-[8px]">
     <div class="text-end cursor-pointer">
       <Icon v-if="!card.note" name="fluent:note-add-16-regular" class="active:bg-gray-500" @click="focusInput" />
       <Icon v-if="card.note" name="pepicons-pencil:pen" class="mx-2 active:bg-gray-500" @click="focusInput" />
-      <Icon v-if="card.note" name="streamline-sharp:recycle-bin-2" class="active:bg-gray-500" @click="removeNote"/>
+      <Icon v-if="card.note" name="fluent-mdl2:delete" class="active:bg-gray-500" @click="removeNote"/>
     </div>
     <div>
       <UTextarea 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white py-[10px] px-[8px] mb-[10px] rounded-[8px] drop-shadow-[0_0_20px_rgba(0,0,0,0.1)]">
+    <div class="bg-white py-[10px] px-[8px] mb-[10px] rounded-[8px] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
       <div class="flex items-center justify-between">
         <p class="text-xl font-semibold">{{ job.name }}</p>
         <p

@@ -1,10 +1,10 @@
 <template>
-  <div class="h-screen flex flex-col w-[360px]">
-    <div class="h-[43px] flex justify-center items-center shrink-0">
+  <div class="h-screen flex flex-col w-[386px] mr-4">
+    <div class="h-[43px] flex justify-center items-center shrink-0 pr-[26px]">
       <p class="text-xl text-[#c9cfd7]">ประเภทงาน</p>
     </div>
 
-    <div class="mt-2 overflow-y-auto flex-grow"
+    <div class="mt-2 overflow-y-auto flex-grow pr-4"
       @dragover.prevent
       @drop="onDrop"
     >

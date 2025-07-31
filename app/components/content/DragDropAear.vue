@@ -7,6 +7,7 @@
     >
 
       <div class="border-r-[0.5px] border-[#f1f2f4] w-[250px] p-4 flex justify-end flex-col">
+        <div class="flex-1" />
         <p class="text-xs text-[#9ca3af]">รายละเอียด</p>
         <p class="font-semibold text-[#1f2937]">{{ slot.driver_name }}</p>
       </div>

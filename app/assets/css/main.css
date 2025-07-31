@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+/* *, *::before, *::after {
+  box-sizing: border-box;
+} */
+
+/* สำหรับ Webkit-based browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e4e9f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f9fcff;
+  border-radius: 10px;
+  border: 0.5px solid #e4e9f3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* background: #555; */
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:active {
+  /* background: #681d1d; */
+}

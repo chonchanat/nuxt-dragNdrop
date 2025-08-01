@@ -23,8 +23,8 @@ import { useJob } from '#imports';
 import JobCard from './JobCard.vue';
 import { useDrag } from '#imports';
 
-const { jobs, jobsUpdated, data } = useJob();
-const { draggedJob } = useDrag();
+const { jobsUpdated, data } = useJob();
+const { draggedJob, dragStartI, dragStartJ } = useDrag();
 
 const onDrop = () => {
   if (draggedJob.value) {
@@ -40,19 +40,8 @@ const onDrop = () => {
     jobsUpdated.value[jobIndex].sub_job.push(draggedJob.value)
 
     // restore DragDropArea
-    let contentI = null;
-    let contentJ = null;
-    data.value.forEach((driver, i) => {
-      driver.round.forEach((round, j) => {
-        if (round.sub_job_id === draggedJob.value.sub_job_id) {
-          contentI = i;
-          contentJ = j;
-          return;
-        }
-      })
-    })
-    if (contentI !== null && contentJ !== null) {
-      data.value[contentI].round.splice(contentJ, 1, {note:'', sub_job_id: null})
+    if (dragStartI.value !== null && dragStartJ.value !== null) {
+      data.value[dragStartI.value].round.splice(dragStartJ.value, 1, {note: draggedJob.value.note, sub_job_id: null})
     }
   }
 }

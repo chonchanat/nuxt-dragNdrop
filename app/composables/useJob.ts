@@ -17,7 +17,6 @@ for (let i = 0; i < data.value.length; i++) {
 
 export function useJob() {
   return {
-    jobs,
     jobsUpdated,    // Sidebar
     data,           // DragDropArea
   }

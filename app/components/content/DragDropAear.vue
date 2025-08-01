@@ -46,8 +46,7 @@
 
         </div>
     </div>
-
-</div>
+  </div>
 </template>
 
 <script setup>
@@ -56,23 +55,20 @@ import Note from './Note.vue';
 import { useDrag } from '#imports';
 import { useJob } from '#imports';
 
-const { draggedJob } = useDrag();
+const { draggedJob, previewDropI, previewDropJ, dragStartI, dragStartJ, resetDraggable } = useDrag();
 const { data, jobsUpdated } = useJob();
-
-const previewDropI = ref(null);
-const previewDropJ = ref(null);
-
-const dragStartI = ref(null);
-const dragStartJ = ref(null);
 
 const onDragEnter = (i, j) => {
   previewDropI.value = i;
   previewDropJ.value = j;
 }
 
-const onDragLeave = () => {
-  previewDropI.value = null;
-  previewDropJ.value = null;
+const onDragLeave = (event) => {
+  const parentElement = event.currentTarget;
+  if (event.relatedTarget && !parentElement.contains(event.relatedTarget)) {
+    previewDropI.value = null;
+    previewDropJ.value = null;
+  }
 }
 
 const onDragStart = (job, i, j) => {
@@ -83,13 +79,7 @@ const onDragStart = (job, i, j) => {
 }
 
 const onDragEnd = () => {
-  draggedJob.value = null
-
-  previewDropI.value = null
-  previewDropJ.value = null
-
-  dragStartI.value = null
-  dragStartJ.value = null
+  resetDraggable()
 }
 
 const onDrop = (i, j) => {
@@ -122,13 +112,7 @@ const onDrop = (i, j) => {
     }
 
     // reset 
-    draggedJob.value = null
-
-    previewDropI.value = null
-    previewDropJ.value = null
-
-    dragStartI.value = null
-    dragStartJ.value = null
+    resetDraggable()
   }
 }
 

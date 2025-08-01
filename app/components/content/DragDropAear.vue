@@ -58,6 +58,18 @@ import { useJob } from '#imports';
 const { draggedJob, previewDropI, previewDropJ, dragStartI, dragStartJ, resetDraggable } = useDrag();
 const { data, jobsUpdated } = useJob();
 
+// const displayData = ref(JSON.parse(JSON.stringify(data.value))); 
+
+// watch(([previewDropI, previewDropJ]), ([newI, newJ]) => {
+//   if (newI !== null && newJ !== null) {
+//     displayData.value[newI].round.pop()
+//     displayData.value[newI].round.splice(newJ, 0, {...draggedJob.value, note: ''})
+//     console.log(displayData.value[newI].round)
+//   } else {
+//     displayData.value = (JSON.parse(JSON.stringify(data.value)));
+//   }
+// })
+
 const onDragEnter = (i, j) => {
   previewDropI.value = i;
   previewDropJ.value = j;
@@ -82,6 +94,54 @@ const onDragEnd = () => {
   resetDraggable()
 }
 
+// const onDropSwap = (i, j) => {
+//   if (draggedJob.value) {
+//     // restore job if already have in content area (replace from sidebar)
+//     if (data.value[i].round[j].sub_job_id) {
+//       const oldJob = data.value[i].round[j]
+//       const jobIndex = jobsUpdated.value.findIndex((e) => e.id === oldJob.ref_id)
+//       jobsUpdated.value[jobIndex].sub_job.push(oldJob)
+//     }
+
+//     // update jobsUpdated composable
+//     const job_id = draggedJob.value.ref_id
+//     const jobIndex = jobsUpdated.value.findIndex((e) => e.id === job_id)
+//     const sub_job_id = draggedJob.value.sub_job_id
+//     const subJobIndex = jobsUpdated.value[jobIndex].sub_job.findIndex((e) => e.sub_job_id === sub_job_id)
+//     if (subJobIndex >= 0) {
+//       jobsUpdated.value[jobIndex].sub_job.splice(subJobIndex, 1)
+//     }
+
+//     // update content area
+//     const sameRow = i === dragStartI.value
+//     if (sameRow) {
+//       let swap = data.value[i].round.splice(dragStartJ.value, 1)[0]
+//       data.value[i].round.splice(j, 0, swap)
+
+//     } else {
+//       data.value[i].round.splice(j, 0, {...draggedJob.value, note: ''})
+//       data.value[i].round.pop()
+//     }
+    
+//     // restore old index with old object { note: 'note', sub_job_id: null}
+//     const samePosition = i === dragStartI.value && j === dragStartJ.value;
+//     if (dragStartI.value !== null && dragStartJ.value !== null && !samePosition && !sameRow) {
+//       // data.value[dragStartI.value].round[dragStartJ.value] = { note: '', sub_job_id: null }
+//       data.value[dragStartI.value].round.splice(dragStartJ.value, 1)
+//       data.value[dragStartI.value].round.push({ note: '', sub_job_id: null })
+//     }
+    
+//     // reset 
+//     draggedJob.value = null
+
+//     previewDropI.value = null
+//     previewDropJ.value = null
+
+//     dragStartI.value = null
+//     dragStartJ.value = null
+//   }
+// }
+
 const onDrop = (i, j) => {
   if (draggedJob.value) {
     // restore job if already have in content area (replace from sidebar)
@@ -89,6 +149,15 @@ const onDrop = (i, j) => {
       const oldJob = data.value[i].round[j]
       const jobIndex = jobsUpdated.value.findIndex((e) => e.id === oldJob.ref_id)
       jobsUpdated.value[jobIndex].sub_job.push(oldJob)
+    }
+
+    // update jobsUpdated composable
+    const job_id = draggedJob.value.ref_id
+    const jobIndex = jobsUpdated.value.findIndex((e) => e.id === job_id)
+    const sub_job_id = draggedJob.value.sub_job_id
+    const subJobIndex = jobsUpdated.value[jobIndex].sub_job.findIndex((e) => e.sub_job_id === sub_job_id)
+    if (subJobIndex >= 0) {
+      jobsUpdated.value[jobIndex].sub_job.splice(subJobIndex, 1)
     }
 
     // update content area
@@ -100,15 +169,6 @@ const onDrop = (i, j) => {
     if (dragStartI.value !== null && dragStartJ.value !== null && !samePosition) {
       const old_note = draggedJob.value?.note || '';
       data.value[dragStartI.value].round[dragStartJ.value] = { note: old_note, sub_job_id: null }
-    }
-
-    // update jobsUpdated composable
-    const job_id = draggedJob.value.ref_id
-    const jobIndex = jobsUpdated.value.findIndex((e) => e.id === job_id)
-    const sub_job_id = draggedJob.value.sub_job_id
-    const subJobIndex = jobsUpdated.value[jobIndex].sub_job.findIndex((e) => e.sub_job_id === sub_job_id)
-    if (subJobIndex >= 0) {
-      jobsUpdated.value[jobIndex].sub_job.splice(subJobIndex, 1)
     }
 
     // reset 

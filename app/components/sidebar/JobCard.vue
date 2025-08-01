@@ -37,7 +37,7 @@ const props = defineProps({
   job: null,
 })
 
-const { draggedJob } = useDrag();
+const { draggedJob, resetDraggable } = useDrag();
 
 const isShowAll = ref(false);
 
@@ -59,6 +59,8 @@ const onDragStart = (subJob, i) => {
 
 const onDragEnd = () => {
   dragStartI.value = null;
+  
+  resetDraggable();
 }
 
 </script>

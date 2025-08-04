@@ -7,7 +7,8 @@
     </div>
     <div>
       <UTextarea 
-        v-model="computeNote" 
+        :value="formatNote(card.note)"
+        @input="onInput($event.target.value, i, j)"
         class="w-full" 
         ref="inputRefs"
         @focus="isFocused = true"
@@ -28,15 +29,15 @@ const props = defineProps({
 const inputRefs = ref(null)
 const isFocused = ref(false)
 
-const computeNote = computed({
-  get: () => {
-    const rawNote = props.data[props.i].round[props.j].note || ''
-    return isFocused.value ? rawNote : rawNote ? `Note : ${rawNote}` : ''
-  },
-  set: (val) => {
-    props.data[props.i].round[props.j].note = val
-  }
-})
+// const computeNote = computed({
+//   get: () => {
+//     const rawNote = props.data[props.i].round[props.j].note || ''
+//     return isFocused.value ? rawNote : rawNote ? `Note : ${rawNote}` : ''
+//   },
+//   set: (val) => {
+//     props.data[props.i].round[props.j].note = val
+//   }
+// })
 
 const focusInput = () => {
   inputRefs.value?.$el?.querySelector('textarea')?.focus()
@@ -44,6 +45,14 @@ const focusInput = () => {
 
 const removeNote = (i, j) => {
   props.data[props.i].round[props.j].note = '';
+}
+
+const formatNote = (note) => {
+  return isFocused.value ? note : note ? `Note : ${note}` : ''
+}
+
+const onInput = (value, i, j) => {
+  data.value[i].round[j].note = value
 }
 
 </script>

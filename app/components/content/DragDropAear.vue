@@ -58,17 +58,27 @@ import { useJob } from '#imports';
 const { draggedJob, previewDropI, previewDropJ, dragStartI, dragStartJ, resetDraggable } = useDrag();
 const { data, jobsUpdated } = useJob();
 
-// const displayData = ref(JSON.parse(JSON.stringify(data.value))); 
+// const displayData = computed(() => {
+//   if (previewDropI.value !== null && previewDropJ.value !== null && draggedJob.value) {
+//     const copy = JSON.parse(JSON.stringify(data.value));
+//     const i = previewDropI.value;
+//     const j = previewDropJ.value;
+//     const dragged = draggedJob.value;
 
-// watch(([previewDropI, previewDropJ]), ([newI, newJ]) => {
-//   if (newI !== null && newJ !== null) {
-//     displayData.value[newI].round.pop()
-//     displayData.value[newI].round.splice(newJ, 0, {...draggedJob.value, note: ''})
-//     console.log(displayData.value[newI].round)
+//     if (dragStartI.value !== i) {
+//       copy[i].round.pop();
+//       copy[i].round.splice(j, 0, { ...dragged, note: '' });
+//     } else if (i === dragStartI.value && j !== dragStartJ.value) {
+//       copy[i].round.splice(dragStartJ.value, 1); // remove original
+//       copy[i].round.splice(j, 0, { ...dragged, note: '' }); // insert at new
+//     }
+
+//     data.value = copy;
+//     return copy;
 //   } else {
-//     displayData.value = (JSON.parse(JSON.stringify(data.value)));
+//     return data.value;
 //   }
-// })
+// });
 
 const onDragEnter = (i, j) => {
   previewDropI.value = i;
@@ -126,19 +136,12 @@ const onDragEnd = () => {
 //     // restore old index with old object { note: 'note', sub_job_id: null}
 //     const samePosition = i === dragStartI.value && j === dragStartJ.value;
 //     if (dragStartI.value !== null && dragStartJ.value !== null && !samePosition && !sameRow) {
-//       // data.value[dragStartI.value].round[dragStartJ.value] = { note: '', sub_job_id: null }
 //       data.value[dragStartI.value].round.splice(dragStartJ.value, 1)
 //       data.value[dragStartI.value].round.push({ note: '', sub_job_id: null })
 //     }
     
 //     // reset 
-//     draggedJob.value = null
-
-//     previewDropI.value = null
-//     previewDropJ.value = null
-
-//     dragStartI.value = null
-//     dragStartJ.value = null
+//     resetDraggable()
 //   }
 // }
 
